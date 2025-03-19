@@ -4,11 +4,13 @@
   "description": "AI-Driven-HotelManage-BE",
   "main": "index.js",
   "scripts": {
-    "dev": "node src/index.js"
+    "dev": "nodemon src/index.js"
   },
+  "type": "module",
   "author": "Goyum",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9"
   }
 }
