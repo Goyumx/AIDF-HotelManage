@@ -1,15 +1,19 @@
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
+import Navigation from './components/Navigation'
+import Hero from './components/Hero'
+import HotelListings from './components/HotelListing'
 
 function App() {
   
   return (
     <>
-      <div>
-        <h1 className="text-blue-500 text-2xl mt-4">Tailwind</h1>
-        <Button variant="outline">Button</Button>
-
-      </div>
+    <Navigation/>
+    <div className="relative min-h-screen">
+    <Hero/>
+    <img src="/assets/hero/hero_1.jpg" alt="" className="absolute top-0 left-0 w-full h-full object-cover -z-10"/>
+    </div>
+    <HotelListings/>
     </>
   )
 }
