@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
 import HotelListings from './components/HotelListing'
