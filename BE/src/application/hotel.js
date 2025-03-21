@@ -1,3 +1,5 @@
+import Hotel from "../infrastructure/schemas/Hotel.js";
+
 const hotels = [
     {
       _id: "1",
@@ -105,113 +107,84 @@ const hotels = [
     },
   ];
 
-export const getAllHotels=(req,res)=>{
+export const getAllHotels= async(req,res)=>{
+
+    const hotels = await Hotel.find();
     console.log("Success")
     res.json(hotels)
 };
 
-export const getHotelById=(req, res) => {
+export const getHotelById= async (req, res) => {
+
     const hotelId = req.params.id;
-    const hotel = hotels.filter((hotel) => hotel._id === hotelId);
-    res.status(200).json(hotel);
+    const hotel = await Hotel.findById(hotelId);
+
+    if (!hotel) {
+        res.status(404).send();
+        return;
+  }
+
+  res.status(200).json(hotel);
+  return;
 };
 
-export const createHotel = (req, res) => {
-
-    const hotel = req.body;
-  
-    if (
-      !hotel.name ||
-      !hotel.location ||
-      !hotel.rating ||
-      !hotel.reviews ||
-      !hotel.image ||
-      !hotel.price ||
-      !hotel.description
-    ) {
-      res.status(400).json({
-        message: "Please enter all required fields",
-      });
-      return;
-    }
-  
-    hotels.push({
-      _id: hotels.length + 1,
-      name: hotel.name,
-      location: hotel.location,
-      rating: hotel.rating,
-      reviews: hotel.reviews,
-      image: hotel.image,
-      price: hotel.price,
-      description: hotel.description,
-    });
+export const createHotel = async (req, res) => {
     
-    res.status(201).json({
-      message: "Hotel added successfully!",
-      hotel: hotel,
-    });
-};
+    const hotel = req.body;
 
-export const deleteHotel =(req, res) => {
-
-    const hotelId = req.params.id;
-  
-    if (!hotels.find((hotel) => hotel._id === hotelId)) {
-      res.status(404).json({
-        message: "Hotel not found",
-      });
-      return;
+    if (
+        !hotel.name ||
+        !hotel.location ||
+        !hotel.rating ||
+        !hotel.reviews ||
+        !hotel.image ||
+        !hotel.price ||
+        !hotel.description
+    ){
+        res.status(400).send();
+        return;
     }
-  
-    hotels.splice(
-      hotels.findIndex((hotel) => hotel._id === hotelId),
-      1
-    );
-  
-    res.status(200).json({
-      message: `Hotel ${hotelId} deleted successfully!`,
+    await Hotel.create({
+        name: hotel.name,
+        location: hotel.location,
+        rating: parseFloat(hotel.rating),
+        reviews: parseInt(hotel.reviews),
+        image: hotel.image,
+        price: parseInt(hotel.price),
+        description: hotel.description,
     });
+
+    res.status(201).send();
+    return;
 };
 
-export const updateHotel =(req, res) => {
+export const deleteHotel =async (req, res) =>{
     const hotelId = req.params.id;
+    await Hotel.findByIdAndDelete(hotelId);
+
+    res.status(200).send();
+    return;
+};
+
+export const updateHotel =async (req, res) => {
+    const hotelId = req.params.hotelId;
     const updatedHotel = req.body;
   
-    if (!hotels.find((hotel) => hotel._id === hotelId)) {
-      res.status(404).json({
-        message: "Hotel not found",
-      });
-      return;
-    }
-  
     if (
-      !updatedHotel.name ||
-      !updatedHotel.location ||
-      !updatedHotel.rating ||
-      !updatedHotel.reviews ||
-      !updatedHotel.image ||
-      !updatedHotel.price ||
-      !updatedHotel.description
+        !updatedHotel.name ||
+        !updatedHotel.location ||
+        !updatedHotel.rating ||
+        !updatedHotel.reviews ||
+        !updatedHotel.image ||
+        !updatedHotel.price ||
+        !updatedHotel.description
     ) {
-      res.status(400).json({
-        message: "Please enter all required fields",
-      });
-      return;
+        res.status(400).send();
+        return;
     }
-  
-    hotels.filter((hotel) => {
-      if (hotel._id === hotelId) {
-        hotel.name = updatedHotel.name;
-        hotel.location = updatedHotel.location;
-        hotel.rating = updatedHotel.rating;
-        hotel.reviews = updatedHotel.reviews;
-        hotel.image = updatedHotel.image;
-        hotel.price = updatedHotel.price;
-        hotel.description = updatedHotel.description;
-      }
-    });
-  
-    res.status(200).json({
-      message: `Hotel ${hotelId} updated successfully!`,
-    });
+
+    await Hotel.findByIdAndUpdate(hotelId, updatedHotel);
+
+    res.status(200).send();
+    return;
 };
