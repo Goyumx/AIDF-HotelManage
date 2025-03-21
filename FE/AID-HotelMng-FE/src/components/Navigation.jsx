@@ -11,7 +11,7 @@ function Navigation(p) {
         Horizone
         </Link>
         <div className="hidden md:flex space-x-6">
-        <Link href={`/`} className="transition-colors">
+        <Link to={`/`} className="transition-colors">
         Home</Link>
         </div>
       </div>
@@ -21,12 +21,12 @@ function Navigation(p) {
         EN
         </Button>
         <Button variant="ghost" asChild>
-        <Link href="/sign-in">
+        <Link to="/sign-in">
         Log In
         </Link>
         </Button>
         <Button variant="ghost" asChild>
-        <Link href="/sign-up">
+        <Link to="/sign-up">
         Sign Up
         </Link>
         </Button>

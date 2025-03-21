@@ -7,16 +7,21 @@ import HomePage from "./pages/home.page";
 import SignInPage from './pages/sign-in.page'
 import SignUpPage from './pages/sign-up.page'
 import RootLayout from "./layouts/root-layout.layout";
+import MainLayout from './layouts/main.layout'
+import HotelPage from './pages/hotel.page'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route element={<RootLayout />}>
+      <Route element={<RootLayout/>}>
+      <Route path="/sign-in" element={<SignInPage />} />
+      <Route path="/sign-up" element={<SignUpPage />} />
+        <Route element={<MainLayout />}>
           <Route path='/' element={<HomePage/>}/>
-          <Route path="/sign-in" element={<SignInPage />} />
-          <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/hotels/:id" element={<HotelPage />} />
         </Route>
+      </Route>
     </Routes>
     </BrowserRouter>
   </StrictMode>,
