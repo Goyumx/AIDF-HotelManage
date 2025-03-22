@@ -1,6 +1,7 @@
-import User from "../infrastructure/schemas/User.js";
+import User from "../infrastructure/schemas/User";
+import { Request, Response } from "express";
 
-export const createUser = async (req, res) => {
+export const createUser = async (req :Request, res: Response) => {
     const user = req.body;
 
     if (!user.name || !user.email) {
