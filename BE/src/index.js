@@ -4,6 +4,7 @@ import hotelsRouter from "./api/hotel.js";
 import connectDB from "./infrastructure/db.js";
 import usersRouter from "./api/user.js";
 import bookingsRouter from "./api/booking.js";
+import cors from "cors";
 
 const app = express();
 
