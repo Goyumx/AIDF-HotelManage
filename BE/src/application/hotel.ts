@@ -1,32 +1,42 @@
 import Hotel from "../infrastructure/schemas/Hotel";
-import { Request, Response } from "express";
+import NotFoundError from "../domain/errors/not-found-error";
+import ValidationError from "../domain/errors/validation-error";
+import { Request, Response, NextFunction} from "express";
 
 
-export const getAllHotels= async(req :Request, res: Response)=>{
-
-    const hotels = await Hotel.find();
-    console.log("Success")
-    res.json(hotels)
+export const getAllHotels= async(req :Request, res: Response, next:NextFunction)=>{
+    try {
+        const hotels = await Hotel.find();
+        console.log("Success")
+        res.json(hotels)
+    } catch (error) {
+        next(error); 
+    }   
 };
 
-export const getHotelById= async (req :Request, res: Response) => {
-
-    const hotelId = req.params.id;
-    const hotel = await Hotel.findById(hotelId);
-
-    if (!hotel) {
-        res.status(404).send();
+export const getHotelById= async (req :Request, res: Response, next:NextFunction) => {
+    try {
+        const hotelId = req.params.id;
+        const hotel = await Hotel.findById(hotelId);
+        // in order to this to word the id must be 24 characters long
+        // else the db will give other errors
+        // if invalid hote id of 24 characters is passed
+        // the db will return null
+        // else like example 6 characters is passed to the db it gill give other erros
+        // which will give 500 error in gobal error handling middleware
+        if(!hotel) {
+            throw new NotFoundError("Hotel not found");
+        }
+        res.status(200).json(hotel);
         return;
-  }
-
-  res.status(200).json(hotel);
-  return;
+    } catch (error) {
+        next(error);  
+    } 
 };
 
-export const createHotel = async (req :Request, res: Response) => {
-    
-    const hotel = req.body;
-
+export const createHotel = async (req :Request, res: Response, next:NextFunction) => {
+    try {
+        const hotel = req.body;
     if (
         !hotel.name ||
         !hotel.location ||
@@ -36,8 +46,7 @@ export const createHotel = async (req :Request, res: Response) => {
         !hotel.price ||
         !hotel.description
     ){
-        res.status(400).send();
-        return;
+        throw new ValidationError("Invalid hotel data");
     }
     await Hotel.create({
         name: hotel.name,
@@ -51,35 +60,46 @@ export const createHotel = async (req :Request, res: Response) => {
 
     res.status(201).send();
     return;
-};
-
-export const deleteHotel =async (req :Request, res: Response) =>{
-    const hotelId = req.params.id;
-    await Hotel.findByIdAndDelete(hotelId);
-
-    res.status(200).send();
-    return;
-};
-
-export const updateHotel =async (req :Request, res: Response) => {
-    const hotelId = req.params.hotelId;
-    const updatedHotel = req.body;
-  
-    if (
-        !updatedHotel.name ||
-        !updatedHotel.location ||
-        !updatedHotel.rating ||
-        !updatedHotel.reviews ||
-        !updatedHotel.image ||
-        !updatedHotel.price ||
-        !updatedHotel.description
-    ) {
-        res.status(400).send();
-        return;
+    } catch (error) {
+        next(error);
     }
+    
+};
 
-    await Hotel.findByIdAndUpdate(hotelId, updatedHotel);
+export const deleteHotel =async (req :Request, res: Response, next:NextFunction) =>{
+    try {
+        const hotelId = req.params.id;
+        await Hotel.findByIdAndDelete(hotelId);
 
-    res.status(200).send();
-    return;
+        res.status(200).send();
+        return;
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const updateHotel =async (req :Request, res: Response, next:NextFunction) => {
+    try {
+
+        const hotelId = req.params.hotelId;
+        const updatedHotel = req.body;
+        if (
+            !updatedHotel.name ||
+            !updatedHotel.location ||
+            !updatedHotel.rating ||
+            !updatedHotel.reviews ||
+            !updatedHotel.image ||
+            !updatedHotel.price ||
+            !updatedHotel.description
+        ){
+            throw new ValidationError("Invalid hotel data");
+        }
+
+        await Hotel.findByIdAndUpdate(hotelId, updatedHotel);
+        res.status(200).send();
+
+        return;
+        } catch (error) {
+        next(error);   
+    }
 };
