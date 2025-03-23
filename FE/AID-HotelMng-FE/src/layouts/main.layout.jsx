@@ -4,7 +4,7 @@ import Navigation from "@/components/Navigation";
 function MainLayout() {
   return (
     <>
-      <Navigation name="Manupa" />
+      <Navigation/>
       <Outlet />
     </>
   );

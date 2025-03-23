@@ -1,7 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import HomePage from "./pages/home.page";
 import SignInPage from './pages/sign-in.page'
@@ -10,10 +9,13 @@ import RootLayout from "./layouts/root-layout.layout";
 import MainLayout from './layouts/main.layout'
 import HotelPage from './pages/hotel.page'
 import HotelsPage from './pages/hotels.page'
+import { store } from "./lib/store";
+import { Provider } from "react-redux";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
+    <Provider store={store}>
       <Routes>
       <Route element={<RootLayout/>}>
       <Route path="/sign-in" element={<SignInPage />} />
@@ -24,6 +26,7 @@ createRoot(document.getElementById('root')).render(
         </Route>
       </Route>
     </Routes>
+    </Provider>
     </BrowserRouter>
   </StrictMode>,
 )
