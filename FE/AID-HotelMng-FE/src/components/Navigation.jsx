@@ -16,8 +16,12 @@ function Navigation() {
         <div className="hidden md:flex space-x-6">
         <Link to={`/`} className="transition-colors">
         Home</Link>
+        <Link to={`/hotels/create`} className="transition-colors">
+        Create Hotel
+        </Link>
         </div>
       </div>
+      
       <div className="flex items-center space-x-4">
         <Button variant="ghost" className="">
         <Globe className="h-5 w-5 mr-2" />

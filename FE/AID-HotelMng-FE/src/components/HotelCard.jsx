@@ -1,9 +1,10 @@
 import { MapPin, Star } from "lucide-react";
+import { Link } from "react-router";
 
 function HotelCard(props) {
 
     return (
-        <div
+        <Link to = {`/hotels/${props.hotel._id}`}
             key={props.hotel._id}
             className="block group relative"
         >
@@ -37,7 +38,7 @@ function HotelCard(props) {
                 <p>{num}</p>
                 <Button onClick={handleClick}>Click</Button>
             </div> */}
-        </div>
+        </Link>
     );
 }
 
