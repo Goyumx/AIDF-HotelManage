@@ -1,15 +1,11 @@
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import HotelCard from "./HotelCard";
 import LocationTab from "./LocationTab";
-import { getHotels } from "@/lib/api/hotels";
+import { useGetHotelsQuery } from "@/lib/api";
 
 export default function HotelListings(){
 
-  
-  const [hotels, setHotels] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [error, setError] = useState("");
+  const { data: hotels, isLoading, isError, error } = useGetHotelsQuery();
 
   const locations = ["ALL", "France", "Italy", "Australia", "Japan"]
 
@@ -23,19 +19,7 @@ export default function HotelListings(){
     return hotel.location.toLowerCase().includes(selectedLocation.toLowerCase());
 })
 
-  useEffect(() => {
-    getHotels()
-      .then((data) => {
-      setHotels(data);
-    })
-    .catch((error) => {
-      setIsError(true);
-      setError(error.message);
-    })
-    .finally(() => {
-      setIsLoading(false);
-    });
-}, []);
+
 
 if (isLoading) {
   return (
