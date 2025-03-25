@@ -6,10 +6,12 @@ import HomePage from "./pages/home.page";
 import SignInPage from './pages/sign-in.page'
 import SignUpPage from './pages/sign-up.page'
 import RootLayout from "./layouts/root-layout.layout";
+import ProtectedLayout from "./layouts/protected.layout";
 import MainLayout from './layouts/main.layout'
 import HotelPage from './pages/hotel.page'
 import HotelsPage from './pages/hotels.page'
 import CreateHotelPage from "./pages/create-hotel.page";
+import AccountPage from "./pages/account.page";
 import { store } from "./lib/store";
 import { Provider } from "react-redux";
 import { ClerkProvider } from "@clerk/clerk-react";
@@ -30,7 +32,10 @@ createRoot(document.getElementById('root')).render(
           <Route path='/' element={<HomePage/>}/>
           <Route path="/hotels" element={<HotelsPage />} />
           <Route path="/hotels/:id" element={<HotelPage />} />
-          <Route path="/hotels/create" element={<CreateHotelPage />} />
+          <Route element={<ProtectedLayout />}>
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/hotels/create" element={<CreateHotelPage />} />
+          </Route>
         </Route>
       </Route>
     </Routes>

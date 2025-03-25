@@ -5,8 +5,6 @@ import { useSelector } from "react-redux";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 
 function Navigation() {
-  const {user} = useSelector((state) => state.user);
-  console.log(user.name);
 
   return (
     <nav className="z-10 bg-black flex  items-center justify-between px-8 text-white py-4">
@@ -17,9 +15,11 @@ function Navigation() {
         <div className="hidden md:flex space-x-6">
         <Link to={`/`} className="transition-colors">
         Home</Link>
+        <SignedIn>
         <Link to={`/hotels/create`} className="transition-colors">
         Create Hotel
         </Link>
+        </SignedIn>
         </div>
       </div>
 
@@ -38,6 +38,9 @@ function Navigation() {
         </SignedOut>
         <SignedIn>
           <UserButton />
+          <Button asChild>
+            <Link to="/account">My Account</Link>
+          </Button>
         </SignedIn>
       </div>
     </nav>
