@@ -31,7 +31,6 @@ export const createBooking = async (req :Request, res: Response, next :NextFunct
     }
 };
     
-
 export const getAllBookingsForHotel = async (req :Request, res: Response, next :NextFunction) => {
     try {
         const hotelId = req.params.hotelId;

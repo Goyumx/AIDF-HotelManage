@@ -48,6 +48,7 @@ export const createHotel = async (req :Request, res: Response, next:NextFunction
     ){
         throw new ValidationError("Invalid hotel data");
     }
+
     await Hotel.create({
         name: hotel.name,
         location: hotel.location,
@@ -63,7 +64,6 @@ export const createHotel = async (req :Request, res: Response, next:NextFunction
     } catch (error) {
         next(error);
     }
-    
 };
 
 export const deleteHotel =async (req :Request, res: Response, next:NextFunction) =>{
