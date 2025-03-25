@@ -12,11 +12,16 @@ import HotelsPage from './pages/hotels.page'
 import CreateHotelPage from "./pages/create-hotel.page";
 import { store } from "./lib/store";
 import { Provider } from "react-redux";
+import { ClerkProvider } from "@clerk/clerk-react";
+
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
     <Provider store={store}>
+    <BrowserRouter>
+    
       <Routes>
       <Route element={<RootLayout/>}>
       <Route path="/sign-in" element={<SignInPage />} />
@@ -29,7 +34,8 @@ createRoot(document.getElementById('root')).render(
         </Route>
       </Route>
     </Routes>
-    </Provider>
     </BrowserRouter>
+    </Provider>
+    </ClerkProvider>
   </StrictMode>,
 )
