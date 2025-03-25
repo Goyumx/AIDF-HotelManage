@@ -2,7 +2,7 @@ import Hotel from "../infrastructure/schemas/Hotel";
 import NotFoundError from "../domain/errors/not-found-error";
 import ValidationError from "../domain/errors/validation-error";
 import { Request, Response, NextFunction} from "express";
-
+import { CreateHotelDTO } from "../domain/dtos/hotel";
 
 export const getAllHotels= async(req :Request, res: Response, next:NextFunction)=>{
     try {
@@ -36,28 +36,23 @@ export const getHotelById= async (req :Request, res: Response, next:NextFunction
 
 export const createHotel = async (req :Request, res: Response, next:NextFunction) => {
     try {
-        const hotel = req.body;
-    if (
-        !hotel.name ||
-        !hotel.location ||
-        !hotel.rating ||
-        !hotel.reviews ||
-        !hotel.image ||
-        !hotel.price ||
-        !hotel.description
-    ){
-        throw new ValidationError("Invalid hotel data");
-    }
+        const hotel = CreateHotelDTO.safeParse(req.body);
+        // Validate the request data
+        
+        if (!hotel.success) {
+          throw new ValidationError(hotel.error.message);
+        }
+        
 
-    await Hotel.create({
-        name: hotel.name,
-        location: hotel.location,
-        rating: parseFloat(hotel.rating),
-        reviews: parseInt(hotel.reviews),
-        image: hotel.image,
-        price: parseInt(hotel.price),
-        description: hotel.description,
-    });
+        await Hotel.create({
+            name: hotel.data.name,
+            location: hotel.data.location,
+            image: hotel.data.image,
+            price: hotel.data.price,
+            rating: hotel.data.rating,
+            reviews: hotel.data.reviews,
+            description: hotel.data.description,
+        });
 
     res.status(201).send();
     return;
