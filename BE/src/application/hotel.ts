@@ -18,9 +18,9 @@ export const getHotelById= async (req :Request, res: Response, next:NextFunction
     try {
         const hotelId = req.params.id;
         const hotel = await Hotel.findById(hotelId);
-        // in order to this to word the id must be 24 characters long
+        // in order to this to work the id must be 24 characters long
         // else the db will give other errors
-        // if invalid hote id of 24 characters is passed
+        // if invalid hotel id of 24 characters is passed
         // the db will return null
         // else like example 6 characters is passed to the db it gill give other erros
         // which will give 500 error in gobal error handling middleware
