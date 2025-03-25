@@ -1,4 +1,4 @@
-import {getAllHotels, getHotelById, createHotel, deleteHotel, updateHotel } from "../application/hotel";
+import {getAllHotels, getHotelById, createHotel, deleteHotel, updateHotel, generateResponse } from "../application/hotel";
 import express from "express";
 import { isAuthenticated } from "./middleware/authentication-middleware";
 import { isAdmin } from "./middleware/authorization-middleware";
@@ -11,5 +11,6 @@ hotelsRouter
   .get(getHotelById)
   .put(updateHotel)
   .delete(deleteHotel);
+hotelsRouter.route("/llm").post(generateResponse);
 
 export default hotelsRouter; 

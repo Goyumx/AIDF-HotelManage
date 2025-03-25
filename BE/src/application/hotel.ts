@@ -3,6 +3,7 @@ import NotFoundError from "../domain/errors/not-found-error";
 import ValidationError from "../domain/errors/validation-error";
 import { Request, Response, NextFunction} from "express";
 import { CreateHotelDTO } from "../domain/dtos/hotel";
+import OpenAI from "openai";
 
 export const getAllHotels= async(req :Request, res: Response, next:NextFunction)=>{
     try {
@@ -13,6 +14,32 @@ export const getAllHotels= async(req :Request, res: Response, next:NextFunction)
         next(error); 
     }   
 };
+
+export const generateResponse = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const { prompt } = req.body;
+  
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+  
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [
+        { role: "user", content: prompt, },
+      ],
+      store: true,
+    });
+    console.log(completion.choices[0].message);
+    res.status(200).json({
+      message: completion.choices[0].message
+      
+    });
+    return;
+  };
 
 export const getHotelById= async (req :Request, res: Response, next:NextFunction) => {
     try {
