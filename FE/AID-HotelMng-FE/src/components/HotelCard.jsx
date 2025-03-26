@@ -33,6 +33,9 @@ function HotelCard(props) {
                     <span className="text-xl font-bold">${props.hotel.price}</span>
                 </div>
             </div>
+            <p className="text-muted-foreground">
+                Similarity: {(props.confidence * 100).toFixed(2)}%
+            </p>
 
             {/* <div className="mt-4">
                 <p>{num}</p>

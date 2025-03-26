@@ -16,19 +16,22 @@ export const api = createApi({
         }),
     endpoints: (builder) => ({
     getHotels: builder.query({
-        query: () => "hotels",
+      query: () => "hotels",
+    }),
+    getHotelsForSearchQuery: builder.query({
+      query: ({ query }) => `hotels/search/retrieve?query=${query}`,
     }),
     getHotelById: builder.query({
-        query: (id) => `hotels/${id}`,
+      query: (id) => `hotels/${id}`,
     }),
     createHotel: builder.mutation({
-        query: (hotel) => ({
-            url: "hotels",
-            method: "POST",
-            body: hotel,
+      query: (hotel) => ({
+        url: "hotels",
+        method: "POST",
+        body: hotel,
       }),
     }),
   }),
 });
 
-export const {useGetHotelsQuery, useGetHotelByIdQuery, useCreateHotelMutation} = api;
+export const {useGetHotelsQuery,useGetHotelsForSearchQueryQuery, useGetHotelByIdQuery, useCreateHotelMutation } = api;
