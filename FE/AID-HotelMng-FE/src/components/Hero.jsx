@@ -17,7 +17,6 @@ export default function Hero() {
 
     return (
         <div className="">
-        {/* Hero Content */}
         <div className="relative z-10 flex flex-col items-center  text-white justify-center px-8 pt-32 pb-32">
         <h1 className="text-4xl md:text-6xl font-bold  mb-8 text-center">
             Find Your Best Staycation
@@ -27,7 +26,6 @@ export default function Hero() {
             perfect place for you.
         </p>
 
-        {/* Search Form */}
         <form
             onSubmit={handleSearch}
             className="w-full max-w-3xl bg-black/10  backdrop-blur-md lg:h-16 rounded-full p-2 flex items-center"

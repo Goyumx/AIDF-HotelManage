@@ -23,8 +23,6 @@ export default function HotelListings(){
     return hotel.location.toLowerCase().includes(selectedLocation.toLowerCase());
 })
 
-
-
 if (isLoading) {
   return (
     <section className="px-8 py-8 lg:py-16">
