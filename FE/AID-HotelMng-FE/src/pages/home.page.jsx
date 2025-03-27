@@ -1,3 +1,4 @@
+import ExploreGrid from "@/components/ExploreGrid";
 import Hero from "@/components/Hero";
 import HotelListing from "@/components/HotelListing";
 import Testimonials from "@/components/Testimonials";
@@ -14,6 +15,7 @@ const HomePage = () => {
         />
       </div>
       <HotelListing />
+      <ExploreGrid />
       <Testimonials />
     </main>
   )
