@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import HotelListing from "@/components/HotelListing";
+import Testimonials from "@/components/Testimonials";
 
 const HomePage = () => {
   return (
@@ -13,6 +14,7 @@ const HomePage = () => {
         />
       </div>
       <HotelListing />
+      <Testimonials />
     </main>
   )
 }
