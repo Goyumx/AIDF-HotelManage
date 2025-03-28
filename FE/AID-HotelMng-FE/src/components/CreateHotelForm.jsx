@@ -13,8 +13,8 @@ import {
     FormLabel,
     FormMessage,
   } from "@/components/ui/form"
-  import { Input } from "@/components/ui/input"
-  import { Textarea } from "@/components/ui/textarea"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 
   const formSchema = z.object({
     name: z.string().min(1, { message: "Hotel name is required" }),
@@ -29,7 +29,7 @@ import {
 
 export default function CreateHotelPage() {
 
-    const [createHotel, { isLoading }] = useCreateHotelMutation();
+    const [CreateBooking, { isLoading }] = useCreateHotelMutation();
   
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -52,7 +52,6 @@ export default function CreateHotelPage() {
         } catch (error) {
           toast.error("Hotel creation failed");
         }
-        console.log(values);
     };
 
   return (

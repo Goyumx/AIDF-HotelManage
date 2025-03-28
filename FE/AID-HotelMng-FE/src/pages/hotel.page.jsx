@@ -5,6 +5,18 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import   BookingForm  from "@/components/CreateBooking";
+import { SignedIn, SignedOut, } from "@clerk/clerk-react";
+import { Label } from "@radix-ui/react-label";
+import { Link } from "react-router";
 
 const HotelPage = () => {
     const { id } = useParams();
@@ -131,7 +143,27 @@ const HotelPage = () => {
                 <p className="text-2xl font-bold">${hotel.price}</p>
                 <p className="text-sm text-muted-foreground">per night</p>
               </div>
-              <Button size="lg">Book Now</Button>
+              <SignedOut>
+              <Button size="lg" >
+              <Link to="/sign-in">Sign in to Book Now</Link>
+              </Button>
+              </SignedOut>
+              <SignedIn>
+              <Dialog >
+                <DialogTrigger asChild>
+                  <Button size="lg">Book Now</Button>
+                </DialogTrigger>
+                <DialogContent>
+                <DialogHeader>
+                <DialogTitle>Give us the Dates and a prefered Room Number</DialogTitle>
+                <DialogDescription>
+                The relavant Hotel will contact you shortly
+                </DialogDescription>
+                </DialogHeader>
+                <BookingForm hotelId={id} / >
+                </DialogContent>
+              </Dialog>
+              </SignedIn>
             </div>
           </div>
         </div>

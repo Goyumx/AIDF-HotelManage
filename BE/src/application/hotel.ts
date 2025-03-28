@@ -6,6 +6,8 @@ import { CreateHotelDTO } from "../domain/dtos/hotel";
 import OpenAI from "openai";
 
 export const getAllHotels= async(req :Request, res: Response, next:NextFunction)=>{
+    
+    
     try {
         const hotels = await Hotel.find();
         console.log("Success")
