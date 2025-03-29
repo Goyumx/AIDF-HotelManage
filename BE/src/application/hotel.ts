@@ -7,11 +7,32 @@ import OpenAI from "openai";
 
 export const getAllHotels= async(req :Request, res: Response, next:NextFunction)=>{
     
-    
     try {
         const hotels = await Hotel.find();
         console.log("Success")
-        res.json(hotels)
+        res.status(200).json(hotels)
+    } catch (error) {
+        next(error); 
+    }   
+};
+
+export const getAllHotelsASC= async(req :Request, res: Response, next:NextFunction)=>{
+    
+    try {
+        const hotels = await Hotel.find().sort({price: 1});
+        console.log("Success")
+        res.status(200).json(hotels)
+    } catch (error) {
+        next(error); 
+    }   
+};
+
+export const getAllHotelsDESC= async(req :Request, res: Response, next:NextFunction)=>{
+    
+    try {
+        const hotels = await Hotel.find().sort({price: -1});
+        console.log("Success")
+        res.status(200).json(hotels)
     } catch (error) {
         next(error); 
     }   

@@ -1,7 +1,15 @@
-import { Button } from "@/components/ui/button";
+import AllListing from "@/components/AllListing";
+
 
 const HotelsPage = () => {
 
+  return(
+  <main>
+    
+  <AllListing />
+  </main>
+
+  )
 };
   
-  export default HotelsPage;
+export default HotelsPage;

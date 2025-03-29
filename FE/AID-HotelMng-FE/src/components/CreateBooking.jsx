@@ -23,10 +23,10 @@ import { toast } from "sonner";
 import { useCreateBookingMutation } from "@/lib/api";
 
 const formSchema = z.object({
-    checkIn: z.date(),
-    checkOut: z.date(),
+    checkIn: z.date({required_error: "Check-in date is required",}),
+    checkOut: z.date({required_error: "Check-out date is required",}),
     roomNumber: z.number().min(1).max(200),
-});
+    });
 
 const BookingForm = (props) => {
 

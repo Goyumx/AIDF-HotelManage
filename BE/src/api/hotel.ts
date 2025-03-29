@@ -1,4 +1,4 @@
-import {getAllHotels, getHotelById, createHotel, deleteHotel, updateHotel, generateResponse } from "../application/hotel";
+import {getAllHotels, getHotelById, createHotel, deleteHotel, updateHotel,getAllHotelsASC, getAllHotelsDESC } from "../application/hotel";
 import express from "express";
 import { isAuthenticated } from "./middleware/authentication-middleware";
 import { isAdmin } from "./middleware/authorization-middleware";
@@ -8,6 +8,8 @@ import { retrieve } from "../application/retrieve";
 const hotelsRouter = express.Router();
 
 hotelsRouter.route("/").get(getAllHotels).post(isAuthenticated,isAdmin, createHotel);
+hotelsRouter.route("/asc").get(getAllHotelsASC);
+hotelsRouter.route("/desc").get(getAllHotelsDESC);
 hotelsRouter
   .route("/:id")
   .get(getHotelById)

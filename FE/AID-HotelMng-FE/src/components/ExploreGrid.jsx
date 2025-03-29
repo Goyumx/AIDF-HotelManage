@@ -16,15 +16,15 @@ export default function ExploreGrid() {
                 <h2 className="text-3xl font-bold text-white mb-2">
                   Search and Explore more to get your comfort zone
                 </h2>
-                <p className="text-gray-300">Book your perfect stay with us.</p>
+                <p className="text-gray-300">Take a look at variety of Hotels to choose from.</p>
               </div>
               <Button
                 asChild
                 className="bg-white text-black hover:bg-white/90 rounded-full"
               >
-                <a href="/">
-                  Book Now
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                <a href="/hotels">
+                  Show All Hotels
+                  <ArrowRight />
                 </a>
               </Button>
             </div>

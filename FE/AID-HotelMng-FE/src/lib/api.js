@@ -18,6 +18,12 @@ export const api = createApi({
     getHotels: builder.query({
       query: () => "hotels",
     }),
+    getHotelsASC: builder.query({
+      query: () => "hotels/asc",
+    }),
+    getHotelsDESC: builder.query({
+      query: () => "hotels/desc",
+    }),
     getHotelsForSearchQuery: builder.query({
       query: ({ query }) => `hotels/search/retrieve?query=${query}`,
     }),
@@ -38,7 +44,8 @@ export const api = createApi({
         body: booking,
       }),
     }),
+    
   }),
 });
 
-export const {useGetHotelsQuery,useGetHotelsForSearchQueryQuery, useGetHotelByIdQuery, useCreateHotelMutation, useCreateBookingMutation } = api;
+export const {useGetHotelsQuery, useGetHotelsASCQuery, useGetHotelsDESCQuery, useGetHotelsForSearchQueryQuery, useGetHotelByIdQuery, useCreateHotelMutation, useCreateBookingMutation,  } = api;
