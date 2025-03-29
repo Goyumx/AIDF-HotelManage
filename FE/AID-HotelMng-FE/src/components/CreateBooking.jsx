@@ -25,8 +25,10 @@ import { useCreateBookingMutation } from "@/lib/api";
 const formSchema = z.object({
     checkIn: z.date({required_error: "Check-in date is required",}),
     checkOut: z.date({required_error: "Check-out date is required",}),
-    roomNumber: z.number().min(1).max(200),
-    });
+    roomNumber: z.number().min(1).max(400),
+    }).refine(data => data.checkOut > data.checkIn,{
+        message: "Check-out date must be after check-in date",
+        path: ["checkOut"],});
 
 const BookingForm = (props) => {
 
@@ -35,7 +37,6 @@ const BookingForm = (props) => {
     const { user } = useUser(); // Get userId from Clerk
     const userId = user?.id; // Ensure userId is available
     const navigate = useNavigate();
-
 
     const form = useForm({ resolver: zodResolver(formSchema), });
 
@@ -67,28 +68,27 @@ const BookingForm = (props) => {
 };
 
   return (
-    
+
     <Form {...form}>
     <form className="  ml-18 mr-18 w-5/7" onSubmit={form.handleSubmit(handleSubmit)}>
 
     <div className="max-w-md mx-auto p-4 border rounded-lg shadow-lg">  
         <h2 className="text-2xl font-semibold mb-4">Book Your Stay</h2>
-        <label className="block font-medium mb-1">Select Dates</label>
+        <label className="block font-medium mb-3">Select Dates</label>
 
-    <FormField
+    <FormField 
         control={form.control}
         name="checkIn"
         render={({ field }) => (
             <FormItem>
-            <FormLabel>Hotel Name</FormLabel>
+            <FormLabel>Your Check in date</FormLabel>
             <Popover>
-            
             <PopoverTrigger asChild>
             <FormControl>
             <Button variant="outline" className="w-[280px] justify-start text-left font-normal">
             
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {field.value ? format(field.value, "PPP") : <span>Check out Date</span>}
+            {field.value ? format(field.value, "PPP") : <span>Check in Date</span>}
             </Button>
             </FormControl>
             </PopoverTrigger>
@@ -105,13 +105,13 @@ const BookingForm = (props) => {
             </FormItem>
         )}
     />
-
+    <div className="mt-4 mb-4"> 
     <FormField
         control={form.control}
         name="checkOut"
         render={({ field }) => (
             <FormItem>
-            <FormLabel>Hotel Name</FormLabel>
+            <FormLabel>Your Check out date</FormLabel>
             <Popover>
             <PopoverTrigger asChild>
             <FormControl>
@@ -134,13 +134,13 @@ const BookingForm = (props) => {
             </FormItem>
         )}
     />
-    
+    </div>
     <FormField
         control={form.control}
         name="roomNumber"
         render={({ field }) => (
             <FormItem>
-            <FormLabel>Hotel Name</FormLabel>
+            <FormLabel>Prefered room number</FormLabel>
             <FormControl>
                 <Input type="number"
                     placeholder="Enter room number"
