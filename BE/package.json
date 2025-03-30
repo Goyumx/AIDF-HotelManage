@@ -4,7 +4,8 @@
   "description": "AI-Driven-HotelManage-BE",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "start": "ts-node src/index.ts"
+    "build": "npm install && tsc",
+    "start": "node .dist/index.js"
   },
   "author": "Goyum",
   "license": "ISC",

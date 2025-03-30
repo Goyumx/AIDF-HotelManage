@@ -11,7 +11,7 @@ const app = express();
 
 app.use(clerkMiddleware());
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "https://aidf-horizone-frontend-goyum.netlify.app" }));
 
 connectDB();
 
@@ -20,5 +20,5 @@ app.use("/api/bookings", bookingsRouter);
 
 app.use(globalErrorHandlingMiddleware);
 
-const PORT = 8000;
+const PORT = process.env.PORT||8000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}...`));
