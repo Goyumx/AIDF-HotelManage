@@ -7,12 +7,15 @@ import cors from "cors";
 import globalErrorHandlingMiddleware from "./api/middleware/global-error-handling-middleware";
 import { clerkMiddleware } from "@clerk/express";
 
+const corsOptions = {
+	origin: process.env.CORS_ORIGIN,
+};
 const app = express();
 
 app.use(clerkMiddleware());
 app.use(express.json());
-app.use(cors({ origin: "https://aidf-horizone-frontend-goyum.netlify.app" }));
 
+app.use(cors(corsOptions));
 connectDB();
 
 app.use("/api/hotels", hotelsRouter);

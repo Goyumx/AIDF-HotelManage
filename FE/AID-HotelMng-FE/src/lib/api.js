@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 export const api = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://aidf-horizone-backend-goyum.onrender.com/api/",
+        baseUrl: `${BASE_URL}/api/`,
         prepareHeaders: async (headers, { getState }) => {
             const token = await window?.Clerk?.session?.getToken();
             console.log(token);
